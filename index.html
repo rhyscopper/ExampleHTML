@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Potential Candidates</title>
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+  <style type="text/css">
+    body {
+      background-image: url("GreyBackground.jpg");
+      height: 100%;
+    }
+    html{ 
+      height: 100%;
+    }
+    .BannerText {
+    text-align: center;
+    position: absolute;
+    top: 7.5%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #ff6e5b;
+}
+    #TopImage {
+    /* The image used */
+      background-image: url("Marble.png");
+
+    /* sets the height */
+    height: 20%; 
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+    .candidates {
+      font-size: 12px;
+      background: #fff;
+      margin: 45px;
+      width: 480px;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    .candidates th {
+      font-size: 16px;
+      font-weight: normal;
+      color: #ef4545;
+      padding: 10px 8px;
+      border-bottom: 2px solid #88898c;
+    }
+
+    .candidates td {
+      color: #ef4545;
+      padding: 9px 8px 0px 8px;
+    }
+
+    .candidates tbody tr:hover td {
+      color: #88898c;
+    }
+  </style>
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="TopImage">
+    <h1 class = "BannerText">List of Potential Candidates</h1>
+  </div>
+  <div id="container">
+    <h2> Demo Table Of Candidates <h2>
+    <table class="candidates" id="candidates_example">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Skills</th>
+        </tr>
+      </thead>
+      <tr>
+        <td>Cirpo</td>
+        <td>JavaScript, Docker</td>
+      </tr>
+      <tr>
+        <td>Louis</td>
+        <td>Java, AEM</td>
+      </tr>
+      <tr>
+        <td>Nermin</td>
+        <td>.NET, Azure</td>
+      </tr>
+    </table>
+    <h2> Javascript Candidates <h2>
+  </div>
+
+  <script type="text/javascript">
+    const newCandidates = [
+      { name: "Kerrie", skills: ["JavaScript", "Docker", "Ruby"] },
+      { name: "Mario", skills: ["Python", "AWS"] },
+      { name: "Jacquline", skills: ["JavaScript", "Azure"] },
+      { name: "Kathy", skills: ["JavaScript", "Java"] },
+      { name: "Anna", skills: ["JavaScript", "AWS"] },
+      { name: "Matt", skills: ["PHP", "AWS"] },
+      { name: "Matt", skills: ["PHP", ".Net", "Docker"] },
+    ];
+
+    function removeRowsFromTable(table) {
+      const rows = table.getElementsByTagName("tr");
+
+      while (rows.length > 1) {
+        table.deleteRow(1);
+      }
+    }
+
+    function insertCandidate(tbody, name, skills) {
+      const newRow = tbody.insertRow();
+      const nameCell = newRow.insertCell();
+      const skillCell = newRow.insertCell();
+
+      const candidateName = document.createTextNode(name);
+      const candidateSkills = document.createTextNode(skills.join(', '));
+
+      nameCell.appendChild(candidateName);
+      skillCell.appendChild(candidateSkills);
+    }
+
+    function addCandidatesToTable(table, candidates) {
+      candidates.forEach(candidate => insertCandidate(table, candidate.name, candidate.skills));
+    }
+
+    function filterCandidateBySkill(candidates, skill) {
+      //created a filter for the candidate that would only return the candidates that have the skill passed.
+      candidates = candidates.filter(candidate => candidate.skills.includes(skill))
+      return candidates;
+    }
+
+    const candidatesTable = document.getElementById("candidates_example");
+    const newCandidatesTable = candidatesTable.cloneNode(true);
+
+    removeRowsFromTable(newCandidatesTable);
+    const newTbody = newCandidatesTable.getElementsByTagName('tbody')[0]; 
+
+    const filteredCandidates = filterCandidateBySkill(newCandidates, 'JavaScript')
+    addCandidatesToTable(newTbody, filteredCandidates); 
+    document.body.appendChild(newCandidatesTable);
+
+
+    // created a new table for Java candidates following what was defined above.
+    const candidatesTable2 = document.getElementById("candidates_example");
+    const newCandidatesTable2 = candidatesTable2.cloneNode(true);
+
+    removeRowsFromTable(newCandidatesTable2);
+    const newTbody2 = newCandidatesTable2.getElementsByTagName('tbody')[0]; 
+
+    const filteredCandidates2 = filterCandidateBySkill(newCandidates, 'AWS')
+    addCandidatesToTable(newTbody2, filteredCandidates2);
+
+    // assigned a new title so it comes after the Javascript table
+    var JavaTitle = document.createTextNode("AWS Candidates");
+    var header = document.createElement("H2");
+    header.appendChild(JavaTitle);
+    document.body.appendChild(header) 
+
+    document.body.appendChild(newCandidatesTable2);
+
+    //created another table
+    const candidatesTable3 = document.getElementById("candidates_example");
+    const newCandidatesTable3 = candidatesTable3.cloneNode(true);
+
+    removeRowsFromTable(newCandidatesTable3);
+    const newTbody3 = newCandidatesTable3.getElementsByTagName('tbody')[0]; 
+
+    const filteredCandidates3 = filterCandidateBySkill(newCandidates, 'Java')
+    addCandidatesToTable(newTbody3, filteredCandidates3);
+
+    // assigned a new title so it comes after the Javascript table
+    var JavaTitle2 = document.createTextNode("Java Candidates");
+    var header2 = document.createElement("H2");
+    header2.appendChild(JavaTitle2);
+    document.body.appendChild(header2) 
+
+    document.body.appendChild(newCandidatesTable3);
+  </script>
+</body>
+</html>
